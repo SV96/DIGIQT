@@ -63,7 +63,7 @@ class new_show(TemplateView):
 
 class movieTitle(APIView):
     def get(self, request):
-        movie1 = scrapdata.objects.values('title')
+        movie1 = scrapdata.objects.values('title').order_by('title')
         serializer = scrapdataTitleSerializers(movie1, many=True)
         return Response(serializer.data)
 
@@ -83,7 +83,7 @@ class movieReateing(APIView):
 
 class movieRelease(APIView):
     def get(self, request):
-        movie1 = scrapdata.objects.values('release_date')
+        movie1 = scrapdata.objects.values('release_date').order_by('release_date')
         serializer = scrapdataReleaseSerializers(movie1, many=True)
         return Response(serializer.data)
 
