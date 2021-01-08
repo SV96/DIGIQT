@@ -10,7 +10,7 @@ from django.shortcuts import get_object_or_404  # get object else not found
 from rest_framework.views import APIView  # return APIDATA
 from rest_framework.response import Response  # used for return response
 from rest_framework import status  # send back status
-from .serializers import scrapdataSerializers
+from .serializers import scrapdataSerializers,scrapdataTitleSerializers,scrapdataRateingSerializers,scrapdataReleaseSerializers,scrapdataDurationSerializers,scrapdataDescriptionSerializers
 
 
 # Create your views here.
@@ -38,7 +38,6 @@ def add_data(request):
     movies_description = []
 
     for i in range(len(all_movies_url)):
-
         movie_1 = all_movies_url[i]
         movie_website = requests.get(movie_1)
         movie_soup = bs(movie_website.content, 'lxml')
@@ -62,10 +61,61 @@ class new_show(TemplateView):
     template_name = 'home.html'
 
 
+class movieTitle(APIView):
+    def get(self, request):
+        movie1 = scrapdata.objects.values('title')
+        serializer = scrapdataTitleSerializers(movie1, many=True)
+        return Response(serializer.data)
+
+    def post(self):
+        pass
+
+
+class movieReateing(APIView):
+    def get(self, request):
+        movie1 = scrapdata.objects.values('rating')
+        serializer = scrapdataRateingSerializers(movie1, many=True)
+        return Response(serializer.data)
+
+    def post(self):
+        pass
+
+
+class movieRelease(APIView):
+    def get(self, request):
+        movie1 = scrapdata.objects.values('release_date')
+        serializer = scrapdataReleaseSerializers(movie1, many=True)
+        return Response(serializer.data)
+
+    def post(self):
+        pass
+
+
+class movieDuration(APIView):
+    def get(self, request):
+        movie1 = scrapdata.objects.values('duration')
+        serializer = scrapdataDurationSerializers(movie1, many=True)
+        return Response(serializer.data)
+
+    def post(self):
+        pass
+
+
+class movieDescription(APIView):
+    def get(self, request):
+        movie1 = scrapdata.objects.values('description')
+        serializer = scrapdataDescriptionSerializers(movie1, many=True)
+        return Response(serializer.data)
+
+    def post(self):
+        pass
+
+
 class movieList(APIView):
-    def get(self,request):
+    def get(self, request):
         movie1 = scrapdata.objects.all()
         serializer = scrapdataSerializers(movie1, many=True)
         return Response(serializer.data)
+
     def post(self):
         pass
