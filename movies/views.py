@@ -5,12 +5,16 @@ from bs4 import BeautifulSoup as bs
 import requests
 from movies.models import scrapdata
 
+from rest_framework import generics
+from rest_framework import filters
+
 from django.http import HttpResponse  # return response
 from django.shortcuts import get_object_or_404  # get object else not found
 from rest_framework.views import APIView  # return APIDATA
 from rest_framework.response import Response  # used for return response
 from rest_framework import status  # send back status
-from .serializers import scrapdataSerializers,scrapdataTitleSerializers,scrapdataRateingSerializers,scrapdataReleaseSerializers,scrapdataDurationSerializers,scrapdataDescriptionSerializers
+from .serializers import scrapdataSerializers, scrapdataTitleSerializers, scrapdataRateingSerializers, \
+    scrapdataReleaseSerializers, scrapdataDurationSerializers, scrapdataDescriptionSerializers
 
 
 # Create your views here.
@@ -119,3 +123,11 @@ class movieList(APIView):
 
     def post(self):
         pass
+
+
+class searchNew(generics.ListCreateAPIView):
+    search_fields = ['title','rating','release_date','duration','description']
+    filter_backends = (filters.SearchFilter,)
+    # queryset = scrapdata.objects.values('title')
+    queryset = scrapdata.objects.all()
+    serializer_class = scrapdataSerializers

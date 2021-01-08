@@ -12,6 +12,9 @@ urlpatterns = [
     path('imdb_movies/release/',views.movieRelease.as_view(),name='title'),
     path('imdb_movies/duration/',views.movieDuration.as_view(),name='title'),
     path('imdb_movies/description/',views.movieDescription.as_view(),name='title'),
-    path('imdb_movies/',views.movieList.as_view(),name='addData')
+    path('imdb_movies/',views.movieList.as_view(),name='addData'),
+
+    path('imdb_movies/search/',views.searchNew.as_view())
+
 ]
 
