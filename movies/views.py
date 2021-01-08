@@ -7,6 +7,7 @@ from movies.models import scrapdata
 
 from rest_framework import generics
 from rest_framework import filters
+from rest_framework.permissions import IsAuthenticated
 
 from django.http import HttpResponse  # return response
 from django.shortcuts import get_object_or_404  # get object else not found
@@ -116,6 +117,8 @@ class movieDescription(APIView):
 
 
 class movieList(APIView):
+    permission_classes = (IsAuthenticated,)
+
     def get(self, request):
         movie1 = scrapdata.objects.all()
         serializer = scrapdataSerializers(movie1, many=True)
@@ -126,7 +129,7 @@ class movieList(APIView):
 
 
 class searchNew(generics.ListCreateAPIView):
-    search_fields = ['title','rating','release_date','duration','description']
+    search_fields = ['title', 'rating', 'release_date', 'duration', 'description']
     filter_backends = (filters.SearchFilter,)
     # queryset = scrapdata.objects.values('title')
     queryset = scrapdata.objects.all()
