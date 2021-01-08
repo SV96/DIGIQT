@@ -67,6 +67,8 @@ class new_show(TemplateView):
 
 
 class movieTitle(APIView):
+    permission_classes = (IsAuthenticated,)
+
     def get(self, request):
         movie1 = scrapdata.objects.values('title').order_by('title')
         serializer = scrapdataTitleSerializers(movie1, many=True)
@@ -77,6 +79,8 @@ class movieTitle(APIView):
 
 
 class movieReateing(APIView):
+    permission_classes = (IsAuthenticated,)
+
     def get(self, request):
         movie1 = scrapdata.objects.values('rating')
         serializer = scrapdataRateingSerializers(movie1, many=True)
@@ -87,6 +91,8 @@ class movieReateing(APIView):
 
 
 class movieRelease(APIView):
+    permission_classes = (IsAuthenticated,)
+
     def get(self, request):
         movie1 = scrapdata.objects.values('release_date').order_by('release_date')
         serializer = scrapdataReleaseSerializers(movie1, many=True)
@@ -97,6 +103,8 @@ class movieRelease(APIView):
 
 
 class movieDuration(APIView):
+    permission_classes = (IsAuthenticated,)
+
     def get(self, request):
         movie1 = scrapdata.objects.values('duration')
         serializer = scrapdataDurationSerializers(movie1, many=True)
@@ -107,6 +115,8 @@ class movieDuration(APIView):
 
 
 class movieDescription(APIView):
+    permission_classes = (IsAuthenticated,)
+
     def get(self, request):
         movie1 = scrapdata.objects.values('description')
         serializer = scrapdataDescriptionSerializers(movie1, many=True)
@@ -129,6 +139,8 @@ class movieList(APIView):
 
 
 class searchNew(generics.ListCreateAPIView):
+    permission_classes = (IsAuthenticated,)
+
     search_fields = ['title', 'rating', 'release_date', 'duration', 'description']
     filter_backends = (filters.SearchFilter,)
     # queryset = scrapdata.objects.values('title')
